@@ -189,7 +189,9 @@ def test_behaviour_notes_from_1x_are_ignored_with_a_notice(tmp_path, capsys):
     path = tmp_path / "config.json"
     write_config(path, config_data() | {"features": {"behaviour_notes": True}})
     config = load_config(path)
-    assert "behaviour notes are unavailable" in capsys.readouterr().err
+    assert "librus-mcp: behaviour notes are unavailable; the setting is ignored" in (
+        capsys.readouterr().err.splitlines()
+    )
     names = {tool.name for tool in asyncio.run(create_server(config).list_tools())}
     assert not any("behaviour" in name for name in names)
 

@@ -14,7 +14,7 @@ adapts them on first start (see [Upgrading an existing setup](#upgrading-an-exis
 Library and MCP version numbers are independent: 2.0.0 pins the published native
 library `1.0.2`. Use an explicit version pin when selecting a release.
 
-## Moving from 2.0 to 2.1
+## Moving from 2.0 to later native releases
 
 2.8.1 pins API 1.10.1. Reuse the existing configuration,
 context key, sends and notification stores. Refresh the host's tool catalog.
@@ -30,20 +30,17 @@ unfiltered mail. New archive/filter fields must be preserved on round trips.
 No migration command or state reset is required. The new history, class-free-day
 and modern discovery contracts are in [MCP_CONTRACT.md](MCP_CONTRACT.md).
 
-The setup commands below retain the published 2.0 migration example; the
-[README](README.md) targets 2.1.
-
 ## Upgrading an existing setup
 
-Change the host's version pin to `librus-mcp==2.0.0` and run it with Python 3.14
-(`uvx --python 3.14 librus-mcp==2.0.0 ...`). Keep the existing `--config` or
+Update the host's package pin and Python version to match the
+[README quick start](README.md#quick-start). Keep the existing `--config` or
 `LIBRUS_CONFIG` file. On first start the server, without operator steps:
 
 - creates a persistent context key in `state_dir/context.key` when the
   configuration has none (back up the state directory with it);
 - restricts the user's own configuration file to `0600` and the state/download
   directories to `0700` when they are shared, as 1.x download directories were;
-- ignores `behaviour_notes`, which 2.0 does not provide, with a notice;
+- ignores the legacy `behaviour_notes` setting with a notice;
 - adopts 1.x notification files on an account's first poll: consumed but
   undelivered agenda events are imported and delivered, and the originals move
   to `state_dir/legacy-1x`. Old seen-IDs cannot be translated, so the first poll
@@ -70,9 +67,9 @@ Native service defaults bound combined rate, burst, active requests and queues.
 | Final-grade legacy mappings | `items` with midterm/predicted/annual availability and raw values |
 | Runtime exception text | `isError=true` with a closed `error.code`; no raw input/page/cause text |
 
-The current 2.1 catalog has 31 tools, including notifications and attachments.
-Enabling sending gives 35 tools; disabling notifications and attachments leaves
-27. Every tool has typed input/output schemas:
+The 2.1 catalog had 31 tools, including notifications and attachments.
+Enabling sending gave 35 tools; disabling notifications and attachments left
+27. Its tools had typed input/output schemas:
 
 | Family | Tools |
 | --- | --- |
